@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "portfowarding.h"
 
 std::istream& operator>> (std::istream& in, Package& pack ){
@@ -72,5 +71,3 @@ std::ostream & operator<< (std::ostream & out, const Package & pack) {
 	out << "data: " << pack.data << std::endl;
 	return out;
 }
-=======
->>>>>>> e0b262d675ad1d13c81590ed8b408c8a2695d247
