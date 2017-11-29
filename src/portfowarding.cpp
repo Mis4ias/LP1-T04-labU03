@@ -35,10 +35,6 @@ std::istream& operator>> (std::istream& in, Package& pack ){
 	pack.ip = std::to_string(ip1) + "." + std::to_string(ip2) + "." + std::to_string(ip3) + "." + std::to_string(ip4);
 
 
-	if(pack.ihl>5){
-		int skip;
-		skip=pack.ihl-5;
-	}
 
 	//PEGANDO PORTA
 	// to tentando desenvolver ainda//
@@ -48,12 +44,25 @@ std::istream& operator>> (std::istream& in, Package& pack ){
 		buffer.clear();
 		if (pack.ihl % 2) in.ignore(12);
 	}
+
 	buffer.ignore(6);
 	int porta1, porta2;
-	int null1, null2;
 	buffer>> porta1 >> porta2;
+	pack.port = (porta1<<8) + porta2;
 
-	pack.port = porta1;
+	//PEGANDO DATA
+	int tam_data = pack.total_length - pack.ihl * 4;
+	int data;
+	do{
+		std::getline(in, linha); // pega a linha 5 onde começa os dados
+		buffer.str(linha); 
+		buffer >> data; 	// buffer é um stringstream que recebe a linha do arquivo e passa o token para data
+		pack.data+=(char)data; // pack.data é uma string que recebe data que é um hex que foi convertido
+		pack.data+="/";// só pra separar na saida (auxiliar)
+		--tam_data;//tamanho data é o rage que ele tem que ler
+	
+	}while (tam_data>0);
+		
 
 
 	return in;
