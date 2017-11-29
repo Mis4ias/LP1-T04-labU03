@@ -1,5 +1,5 @@
 #include "portfowarding.h"
-
+#include <iostream>
 std::istream& operator>> (std::istream& in, Package& pack ){
 	int ihl, dscp, null, total_length2;
 	// VERIFICA SER O ARQUIVO TA FUNCIONANDO
@@ -39,7 +39,9 @@ std::istream& operator>> (std::istream& in, Package& pack ){
 	//PEGANDO PORTA
 	// to tentando desenvolver ainda//
 	if (pack.ihl > 5) {
-		for (unsigned i = 5; i < pack.ihl; i++) std::getline(in, linha);
+		for (unsigned i = 5; i < pack.ihl; i++){
+			std::getline(in, linha);
+		}
 		buffer.str(linha);
 		buffer.clear();
 		if (pack.ihl % 2) in.ignore(12);
@@ -50,20 +52,19 @@ std::istream& operator>> (std::istream& in, Package& pack ){
 	buffer>> porta1 >> porta2;
 	pack.port = (porta1<<8) + porta2;
 
-	//PEGANDO DATA
-	int tam_data = pack.total_length - pack.ihl * 4;
+//PEGANDO DATA
+	int tam_data = pack.total_length - (pack.ihl * 4);
+	tam_data = tam_data/8;
 	int data;
-	do{
+	while (tam_data >= 0){
 		std::getline(in, linha); // pega a linha 5 onde começa os dados
-		buffer.str(linha); 
-		buffer >> data; 	// buffer é um stringstream que recebe a linha do arquivo e passa o token para data
-		pack.data+=(char)data; // pack.data é uma string que recebe data que é um hex que foi convertido
-		pack.data+="/";// só pra separar na saida (auxiliar)
-		--tam_data;//tamanho data é o rage que ele tem que ler
-	
-	}while (tam_data>0);
-		
-
+		buffer.str(linha);
+	while(buffer >> data){
+		pack.data+=(char)data; // pack.data é uma string que recebe data que é um hex que foi convertido/
+	}
+		buffer.clear();
+		tam_data--;
+	}
 
 	return in;
 }
