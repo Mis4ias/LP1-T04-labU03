@@ -5,6 +5,7 @@
 #include <ios>
 #include <fstream>
 #include <string>
+#include <vector>
 //using namespace std;
 class Package{
 private:

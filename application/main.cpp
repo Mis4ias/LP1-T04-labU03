@@ -3,10 +3,18 @@
 
 int main(int argc, char** argv){
   std::ifstream input;
-	input.open("./assets/config2.in");
+	input.open("./assets/config.in");
 
+
+
+ 
+ 
   Package pacote;
   input>>pacote;
-  std::cout<<pacote;
+ 
+ 
 
+  std::cout<<'\n'<< pacote <<'\n';
+ 
+ 
 }
