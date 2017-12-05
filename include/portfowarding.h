@@ -1,4 +1,4 @@
-	#ifndef __PORTFOWARDING_H__
+#ifndef __PORTFOWARDING_H__
 #define __PORTFOWARDING_H__
 #include <iostream>
 #include <sstream>
@@ -15,10 +15,12 @@ private:
 	std::string ip;
 	int port;
 	std::string data;
+
 public:
 	//friend istream& operator>> (std::istream& in, Package& pack);
-	friend std::istream& operator>> (std::istream& in, Package& pack);
+	//friend std::istream& operator>> (std::istream& in, Package& pack);
 	friend std::ostream& operator<< (std::ostream &, const Package &);
+	void read_file(std::string name);
 };
 
 
