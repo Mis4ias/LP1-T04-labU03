@@ -10,6 +10,8 @@
 class Package{
 private:
 	unsigned int ihl;
+	long int porta_cfg,aplication_cfg;
+	std::string  ip_cfg;
 	int dscp;
 	int total_length;
 	std::string ip;
@@ -17,10 +19,10 @@ private:
 	std::string data;
 
 public:
-	//friend istream& operator>> (std::istream& in, Package& pack);
-	//friend std::istream& operator>> (std::istream& in, Package& pack);
+	friend std::istream& operator>> (std::istream& in, Package& pack);
 	friend std::ostream& operator<< (std::ostream &, const Package &);
-	void read_file(std::string name);
+	void read_cfg(std::string file_path);
+
 };
 
 
